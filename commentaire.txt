@@ -1,0 +1,28 @@
+﻿TP5 - Commentaire sur le pire cas observe
+
+
+1. Tri fusion : O(n log n) dans TOUS les cas.
+   Il coupe toujours en 2 moities egales, donc meme sur tableau deja trie
+   le temps reste stable. Il utilise un tableau temporaire (memoire en plus).
+
+2. Tri rapide : O(n log n) en moyenne, O(n^2) en pire cas.
+   Version du cours : pivot = dernier element.
+   Sur tableau deja trie, le pivot est toujours le max, donc la partition
+   est degeneree : 0 element a gauche, n-1 a droite.
+   On fait n + (n-1) + ... + 1 = n^2/2 comparaisons.
+
+   Resultat observe sur le banc (exemple) :
+   n=100 000 aleatoire : rapide ~0.01s (tres rapide)
+   n=100 000 deja trie : rapide ~2-3s (100x plus lent !)
+   n=100 000 deja trie : fusion ~0.01s (stable)
+
+3. Conclusion :
+   - Ne jamais utiliser pivot = dernier / premier sur donnees qui peuvent
+     etre deja triees (cas frequent en prod).
+   - Solutions : pivot aleatoire, ou mediane de 3, ou utiliser tri fusion.
+   - C'est pour ca que qsort() de la libc utilise mediane + insertion pour petits n.
+
+4. Integration mini-projet (chapitre 8) :
+   tris.c / tris.h sont prets a etre copies dans la bibliotheque du mini-projet.
+   Le mini-projet appelle tri_fusion() pour les gros tableaux tries
+   et tri_rapide() pour les tableaux aleatoires.
